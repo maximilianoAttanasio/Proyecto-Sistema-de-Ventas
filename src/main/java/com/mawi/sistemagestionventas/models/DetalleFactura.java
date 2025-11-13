@@ -1,5 +1,6 @@
 package com.mawi.sistemagestionventas.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +11,7 @@ public class DetalleFactura {
     private int idDetalleFactura;
     @ManyToOne
     @JoinColumn(name = "idFactura")
+    @JsonIgnore
     private Factura factura;
     @ManyToOne
     @JoinColumn(name = "idProducto")

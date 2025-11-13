@@ -1,5 +1,6 @@
 package com.mawi.sistemagestionventas.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Producto {
     private double precio;
     private int stock;
     @OneToMany(mappedBy = "producto")
+    @JsonIgnore
     private List<DetalleFactura> detalles = new ArrayList<>();
 
     public Producto() {

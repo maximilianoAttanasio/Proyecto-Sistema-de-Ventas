@@ -1,5 +1,6 @@
 package com.mawi.sistemagestionventas.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Rol {
     private int idRol;
     private String nombreRol;
     @OneToMany(mappedBy = "rol")
+    @JsonManagedReference
     private List<Persona> personas = new ArrayList<>();
 
     public Rol() {

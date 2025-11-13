@@ -1,5 +1,6 @@
 package com.mawi.sistemagestionventas.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +18,7 @@ public class Persona {
     private String direccion;
     @ManyToOne
     @JoinColumn(name = "idRol")
+    @JsonBackReference
     private Rol rol;
 
     public Persona() {

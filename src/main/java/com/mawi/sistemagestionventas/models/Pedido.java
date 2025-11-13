@@ -1,5 +1,6 @@
 package com.mawi.sistemagestionventas.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ public class Pedido {
     private LocalDate fechaPedido;
 
     @OneToOne(mappedBy = "pedido")
+    @JsonIgnore
     private Factura factura;
 
     public Pedido() {

@@ -1,5 +1,6 @@
 package com.mawi.sistemagestionventas.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -14,6 +15,7 @@ public class Empleado extends Persona {
     private double sueldo;
     private LocalDate fechaContratacion;
     @OneToMany(mappedBy = "empleado")
+    @JsonIgnore
     private List<Pedido> pedidos = new ArrayList<>();
 
     public Empleado() {
