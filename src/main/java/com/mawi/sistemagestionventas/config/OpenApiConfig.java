@@ -25,7 +25,10 @@ public class OpenApiConfig {
                 .servers(List.of(
                         new Server()
                                 .url("http://localhost:8080")
-                                .description("Servidor Local")
+                                .description("Servidor Local"),
+                        new Server()
+                                .url("https://proyecto-sistema-de-ventas.onrender.com")
+                                .description("Servidor en Render")
                 ));
     }
 }
