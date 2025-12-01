@@ -4,11 +4,9 @@ services:
     plan: free
     region: oregon
     env: docker
-    dockerfile_path: ./Dockerfile
+    dockerfilePath: ./Dockerfile
     numInstances: 1
     autoDeploy: true
-    deployToRegion:
-      - oregon
     envVars:
       - key: SPRING_DATASOURCE_URL
         fromDatabase:
