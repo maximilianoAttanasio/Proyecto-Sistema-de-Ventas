@@ -1,5 +1,6 @@
 package com.mawi.sistemagestionventas.services;
 
+import com.mawi.sistemagestionventas.dto.TimeResponseDTO;
 import com.mawi.sistemagestionventas.interfaces.CRUDInterface;
 import com.mawi.sistemagestionventas.models.Empleado;
 import com.mawi.sistemagestionventas.repository.EmpleadoRepository;
@@ -7,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -16,6 +18,9 @@ public class EmpleadoService implements CRUDInterface<Empleado, Integer> {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
+
+    @Autowired
+    private FechaService fechaService;
 
     @Override
     public List<Empleado> findAll() {
@@ -33,6 +38,14 @@ public class EmpleadoService implements CRUDInterface<Empleado, Integer> {
         if (empleadoRepository.existsByDocumento(empleado.getDocumento())) {
             throw new IllegalStateException("Ya existe un empleado con el documento" + empleado.getDocumento());
         }
+
+        TimeResponseDTO fechaActual = fechaService.obtenerFechaYHoraActual();
+        if (fechaActual != null) {
+            empleado.setFechaContratacion(
+                    LocalDate.of(fechaActual.getYear(), fechaActual.getMonth(), fechaActual.getDay())
+            );
+        }
+
         return empleadoRepository.save(empleado);
     }
 

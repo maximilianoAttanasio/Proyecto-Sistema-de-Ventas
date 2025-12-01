@@ -1,0 +1,12 @@
+.git
+.gitignore
+.mvn
+.settings
+target
+Dockerfile
+render.yaml
+README.md
+*.iml
+*.log
+*.class
+**/.idea

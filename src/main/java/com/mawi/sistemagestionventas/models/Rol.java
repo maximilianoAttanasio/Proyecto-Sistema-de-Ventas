@@ -1,49 +1,31 @@
 package com.mawi.sistemagestionventas.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Schema(description = "Modelo de Rol")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table( name = "rol")
+@Table(name = "rol")
 public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRol;
+    @Schema(description = "Nombre del rol", accessMode = Schema.AccessMode.READ_ONLY, example = "Empleado")
     private String nombreRol;
+    @Schema(hidden = true)
     @OneToMany(mappedBy = "rol")
     @JsonManagedReference
     private List<Persona> personas = new ArrayList<>();
-
-    public Rol() {
-    }
-
-    public Rol(String nombreRol) {
-        this.nombreRol = nombreRol;
-    }
-
-    public int getIdRol() {
-        return idRol;
-    }
-
-    public void setIdRol(int idRol) {
-        this.idRol = idRol;
-    }
-
-    public String getNombreRol() {
-        return nombreRol;
-    }
-
-    public void setNombreRol(String nombreRol) {
-        this.nombreRol = nombreRol;
-    }
-
-    public List<Persona> getPersonas() {
-        return personas;
-    }
-
-    public void setPersonas(List<Persona> personas) {
-        this.personas = personas;
-    }
 }

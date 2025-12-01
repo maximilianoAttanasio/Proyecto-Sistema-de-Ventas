@@ -1,74 +1,41 @@
 package com.mawi.sistemagestionventas.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "pedido")
 public class Pedido {
+    @Schema(description = "ID del Pedido", accessMode = Schema.AccessMode.READ_ONLY, example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPedido;
+    @Schema(description = "Cliente Asociado",
+            requiredMode = Schema.RequiredMode.REQUIRED,
+            example = "{\"idPersona\": 2}\"")
     @ManyToOne
     @JoinColumn(name = "id_cliente_persona")
     private Cliente cliente;
+    @Schema(description = "Empleado Asociado",
+            requiredMode = Schema.RequiredMode.REQUIRED,
+            example = "{\"idPersona\": 1}\"")
     @ManyToOne
     @JoinColumn(name = "id_empleado_persona")
     private Empleado empleado;
-    private LocalDate fechaPedido;
-
+    @Schema(description = "Fecha del Pedido", accessMode = Schema.AccessMode.READ_ONLY, example = "2025-11-13")
+    private LocalDateTime fechaPedido;
     @OneToOne(mappedBy = "pedido")
     @JsonIgnore
     private Factura factura;
-
-    public Pedido() {
-    }
-
-    public Pedido(Cliente cliente, Empleado empleado, LocalDate fechaPedido) {
-        this.cliente = cliente;
-        this.empleado = empleado;
-        this.fechaPedido = fechaPedido;
-    }
-
-    public int getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Empleado getEmpleado() {
-        return empleado;
-    }
-
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
-    }
-
-    public LocalDate getFechaPedido() {
-        return fechaPedido;
-    }
-
-    public void setFechaPedido(LocalDate fechaPedido) {
-        this.fechaPedido = fechaPedido;
-    }
-
-    public Factura getFactura() {
-        return factura;
-    }
-
-    public void setFactura(Factura factura) {
-        this.factura = factura;
-    }
 }

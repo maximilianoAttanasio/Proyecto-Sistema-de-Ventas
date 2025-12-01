@@ -1,50 +1,34 @@
 package com.mawi.sistemagestionventas.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Schema(description = "Modelo de Factura")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "factura")
 public class Factura {
+    @Schema(description = "ID de la Factura", accessMode = Schema.AccessMode.READ_ONLY, example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idFactura;
+    @Schema(description = "Pedido Asociado",
+            requiredMode = Schema.RequiredMode.REQUIRED,
+            example = "{\"idPedido\": 1}")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idPedido")
     private Pedido pedido;
+    @Schema(hidden = true)
     @OneToMany(mappedBy = "factura")
     private List<DetalleFactura> detalles = new ArrayList<>();
-
-    public Factura() {
-    }
-
-    public Factura(Pedido pedido) {
-        this.pedido = pedido;
-    }
-
-    public int getIdFactura() {
-        return idFactura;
-    }
-
-    public void setIdFactura(int idFactura) {
-        this.idFactura = idFactura;
-    }
-
-    public Pedido getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
-    }
-
-    public List<DetalleFactura> getDetalles() {
-        return detalles;
-    }
-
-    public void setDetalles(List<DetalleFactura> detalles) {
-        this.detalles = detalles;
-    }
 }

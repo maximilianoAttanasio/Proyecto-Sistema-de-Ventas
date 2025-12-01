@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,6 +25,9 @@ public class PedidoService implements CRUDInterface<Pedido, Integer> {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
+
+    @Autowired
+    private FechaService fechaService;
 
     @Override
     public List<Pedido> findAll() {
@@ -54,6 +58,17 @@ public class PedidoService implements CRUDInterface<Pedido, Integer> {
 
         nuevoPedido.setCliente(cliente);
         nuevoPedido.setEmpleado(empleado);
+
+        var fechaActual = fechaService.obtenerFechaYHoraActual();
+        if (fechaActual != null) {
+            nuevoPedido.setFechaPedido(
+                    LocalDateTime.of(fechaActual.getYear(),
+                            fechaActual.getMonth(),
+                            fechaActual.getDay(),
+                            fechaActual.getHour(),
+                            fechaActual.getMinute())
+            );
+        }
 
         return pedidoRepository.save(nuevoPedido);
     }

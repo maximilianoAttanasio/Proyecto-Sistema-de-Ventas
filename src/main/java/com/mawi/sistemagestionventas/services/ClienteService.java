@@ -1,5 +1,6 @@
 package com.mawi.sistemagestionventas.services;
 
+import com.mawi.sistemagestionventas.dto.TimeResponseDTO;
 import com.mawi.sistemagestionventas.interfaces.CRUDInterface;
 import com.mawi.sistemagestionventas.models.Cliente;
 import com.mawi.sistemagestionventas.repository.ClienteRepository;
@@ -7,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -16,6 +18,9 @@ public class ClienteService implements CRUDInterface<Cliente, Integer> {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private FechaService fechaService;
 
     @Override
     public List<Cliente> findAll() {
@@ -36,6 +41,14 @@ public class ClienteService implements CRUDInterface<Cliente, Integer> {
         if (clienteRepository.existsByEmail(cliente.getEmail())) {
             throw new IllegalStateException("Ya existe un cliente con el email " + cliente.getEmail());
         }
+
+        TimeResponseDTO fechaActual = fechaService.obtenerFechaYHoraActual();
+        if (fechaActual != null) {
+            cliente.setFechaRegistro(
+                    LocalDate.of(fechaActual.getYear(), fechaActual.getMonth(), fechaActual.getDay())
+            );
+        }
+
         return clienteRepository.save(cliente);
     }
 
