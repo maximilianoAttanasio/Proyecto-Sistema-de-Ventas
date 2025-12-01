@@ -11,15 +11,15 @@ services:
       - oregon
     envVars:
       - key: SPRING_DATASOURCE_URL
-        fromDataBase:
+        fromDatabase:
           name: sistema-gestion-ventas-db
           property: connectionString
       - key: SPRING_DATASOURCE_USERNAME
-        fromDataBase:
+        fromDatabase:
           name: sistema-gestion-ventas-db
           property: user
       - key: SPRING_DATASOURCE_PASSWORD
-        fromDataBase:
+        fromDatabase:
           name: sistema-gestion-ventas-db
           property: password
 
